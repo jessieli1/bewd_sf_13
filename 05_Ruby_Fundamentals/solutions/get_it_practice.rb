@@ -11,12 +11,12 @@
          #title, upvote, category are the required columns
 
 require 'pry'  #debugging tool
-require 'typheous' #library that faciltates http requests
+require 'typhoeus' #library that faciltates http requests
 require 'json' #tranforms a string response into 'json'
 
 def connect_to_api(url, api_provider)
-  response = Typheous.get(url)
-  json_response = JSON.parse(response)
+  response = Typhoeus.get(url)
+  json_response = JSON.parse(response.body)
   find_stories(json_response, api_provider)
 end
 

@@ -16,10 +16,29 @@ class Thermostat
  #self.target , @target and target are all the same inside of this instance method
   def calibrate_temp
     #use a conditional to calibrate the temperature
+      if @current_temp > @target
+        turn_off_heat
+      elsif @current_temp < @target
+        turn_on_heat
+      else
+        puts "#{@current_temp} degrees is just right :)"
+      end
   end
 
   def self.detect_temperature(all_temps, target_temp)
     #loop through all temps, detect the temperature, then calibrate it
+    all_temps.each do |temp|
+      therm = Thermostat.new(temp, target_temp)
+      therm.calibrate_temp
+    end
+  end
+
+  def turn_off_heat
+    puts "#{@current_temp} degrees is too hot! Turning off heat.."
+  end
+
+  def turn_on_heat
+    puts "#{@current_temp} degrees is too cold! Turning on heat.."
   end
 end
 

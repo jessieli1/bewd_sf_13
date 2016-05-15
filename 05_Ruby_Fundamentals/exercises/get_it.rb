@@ -15,11 +15,86 @@ require 'typhoeus'#library that faciltates http requests
 require 'pry'
 require 'pry-byebug'
 require 'json'
+require 'csv'
 
-def connect_to_api(url)
+def connect_to_api(url, api, csv)
   response = Typhoeus.get(url)
-  JSON.parse(response.body)
+  json = JSON.parse(response.body)
+  find_stories(json, api, csv)
 end
 
-reddit_url ='http://www.reddit.com/.json'
-reddit_json_response = connect_to_api(reddit_url)
+def find_stories(json, api, csv)
+  if api == 'reddit'
+    find_reddit_stories(json, api, csv)
+  elsif api == 'mashable'
+    find_mashable_stories(json, api, csv)
+  else
+    puts "ERROR: Unrecognized API #{api}"
+  end
+end
+
+def find_reddit_stories(json, api, csv)
+  stories = json['data']['children']
+  print_stories(stories, api, csv)
+end
+
+def find_mashable_stories(json, api, csv)
+  stories = json['new']
+  print_stories(stories, api, csv)
+end
+
+def print_stories(stories, api, csv)
+  stories.each do |story|
+    story = create_story_hash(story, api, csv)
+    add_story_to_csv(story, csv)
+    puts "Title: #{story[:title]}, Upvotes: #{story[:upvotes]}, Category: #{story[:category]}, Source: #{api}\n\n"
+  end
+end
+
+def create_story_hash(story, api, csv)
+  if api == 'reddit'
+    story_hash = {
+      :title => story['data']['title'],
+      :upvotes => story['data']['ups'],
+      :category => story['data']['subreddit']
+    }
+  elsif api == 'mashable'
+    story_hash = {
+      :title => story['title'],
+      :upvotes => story['shares']['total'],
+      :category => story['channel']
+    }
+  else
+    puts "ERROR: No hash generated"
+  end
+end
+
+def new_csv(csv, *column_names)
+  CSV.open(csv, 'wb') do |csv|
+    csv << [column_names]
+  end
+end
+
+def add_story_to_csv(story, csv)
+  CSV.open(csv, 'a+') do |csv|
+    csv << [ story[:title], story[:upvotes], story[:category] ]
+  end
+end
+
+def print_csv(file_name)
+  p CSV.read(file_name)
+end
+
+# ==================================================
+
+reddit_url = 'http://www.reddit.com/.json'
+new_csv('reddit_stories.csv', 'title', 'upvotes', 'category')
+connect_to_api(reddit_url, 'reddit', 'reddit_stories.csv')
+print_csv('reddit_stories.csv')
+
+# ==================================================
+
+mashable_url = 'http://mashable.com/stories.json'
+new_csv('mashable_stories.csv', 'title', 'upvotes', 'category')
+connect_to_api(mashable_url, 'mashable', 'mashable_stories.csv')
+print_csv('mashable_stories.csv')
