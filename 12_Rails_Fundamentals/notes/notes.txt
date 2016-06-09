@@ -1,0 +1,45 @@
+* ROUTE (traffic controller)
+- http traffic control
+
+
+* CONTROLLER (chief conductor, lean director)
+- should not have any logic
+
+
+* MODEL (chief of logic, plump genius)
+- where all methods/logic should be written
+- validations
+
+* VIEW (chief of sexy, super model)
+- no logic
+
+bobaland.com/signup
+--> route /signup, to: users#signup
+
+bobaland.com/locations
+1. route
+    /locations, to:locations#index
+2. controller
+    def index
+      @locations = location.all --> pull from model
+      redirect to /locations
+    end
+
+* CRUD = Create, Read, Update, Delete
+
+======================
+RAILS COMMANDS
+
+rails console
+
+rake db:migrate
+rake routes
+
+* routes.rb
+    root 'books#index'
+    - directs to books_controller.rb
+* books_controller.rb
+    def index
+      @books = Book.all
+    end
+    - displays all books
