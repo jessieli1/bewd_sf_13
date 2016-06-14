@@ -1,0 +1,81 @@
+* USER FLOW
+- GET     /photos             index
+  user goes to webpage
+- GET     /photos/new         new
+  user inputs into form
+- POST    /photos             create
+  something gets created, pending validations
+- GET     /photos/:id         show
+- GET     /photos/:id/edit    edit
+- PATCH   /photos/:id         update
+- DELETE  /photos/:id         destroy
+
+==========================================================
+
+* RAILS COMMANDS
+rails generate controller static_pages about test home
+  - controllers must be PLURALIZED
+  - handles V & C
+  - creates templates for view pages
+  - creates controller for static_pages with associated routes
+  - creates skeleton file for coffee (short hand for javascript)
+  - creates skeleton file for scss (short hand for scss)
+
+rails generate simple_form:install --bootstrap
+
+rails generate model artist name:string genre:string bio:text image:string active:boolean
+  - models are always SINGULAR
+  - creates migration (db > migrate)
+      - if you haven't run 'rake db:migrate', can change migration file
+      - otherwise, must create new migration that makes changes
+  - creates model for artist (app > models)
+
+rails console
+  - loads dev environment (test with pry)
+
+rails g controller artists index show edit new
+  - update and destroy do not have views
+  - after creating controller
+      1. clean up routes
+            - resources :artists
+
+==========================================================
+
+* ACTIVE RECORD METHODS
+artist = Artist.new(name: ...)
+artist.save
+  - SQL to insert instance into database
+
+Artist.create
+  - creates and inserts into database
+
+Artist.all
+
+Artist.where(genre: ...)
+
+Artist.find(:id)
+artist = Artist.find(1)
+artist.update(genre: ..)
+
+Artist.find_by_attribute('...')
+
+==========================================================
+
+* VIEWS > static_pages
+
+==========================================================
+
+* CONFIG > routes.rb
+- Creates homepage:
+    root 'static_pages#home'
+- Create custom paths/URLs
+    get '/about', to: 'static_pages#about', as: 'about'
+    - type of request (get)
+    - custom name (/about)
+    - controlled by static_pages controller & about route (static_pages#about)
+    - special path name (about)
+
+==========================================================
+
+http://localhost:3000/routes
+- shows available paths

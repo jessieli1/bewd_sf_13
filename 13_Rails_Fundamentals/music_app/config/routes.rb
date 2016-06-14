@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+
+  resources :artists
+
+  # Sets homepage
+  root 'static_pages#home'
+
+  # Custom paths
+  get '/about', to: 'static_pages#about', as: 'about'
+  get '/test', to: 'static_pages#test', as: 'test'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
