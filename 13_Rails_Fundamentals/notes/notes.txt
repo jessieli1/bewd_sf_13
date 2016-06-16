@@ -13,7 +13,7 @@
 ==========================================================
 
 * RAILS COMMANDS
-rails generate controller static_pages about test home
+> rails generate controller static_pages about test home
   - controllers must be PLURALIZED
   - handles V & C
   - creates templates for view pages
@@ -21,19 +21,25 @@ rails generate controller static_pages about test home
   - creates skeleton file for coffee (short hand for javascript)
   - creates skeleton file for scss (short hand for scss)
 
-rails generate simple_form:install --bootstrap
+> rails generate simple_form:install --bootstrap
 
-rails generate model artist name:string genre:string bio:text image:string active:boolean
+> rails console
+  - loads dev environment (test with pry)
+
+
+CREATE NEW MODEL
+> rails generate model artist name:string genre:string bio:text image:string active:boolean
   - models are always SINGULAR
   - creates migration (db > migrate)
       - if you haven't run 'rake db:migrate', can change migration file
       - otherwise, must create new migration that makes changes
   - creates model for artist (app > models)
+> rake db:migrate
+> annotate
+  - annotates model with attributes
 
-rails console
-  - loads dev environment (test with pry)
 
-rails g controller artists index show edit new
+> rails g controller artists index show edit new
   - update and destroy do not have views
   - after creating controller
       1. clean up routes
