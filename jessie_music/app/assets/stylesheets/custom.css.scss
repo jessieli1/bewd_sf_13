@@ -1,0 +1,41 @@
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// Fonts - gives access to fonts
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,300,700);
+// @import url(https://fonts.googleapis.com/css?family=Pacifico);
+// @import url(https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic);
+// @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+// font_classes
+// Naming Convention: .class_name OR .ClassName
+.OswaldFontLight {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+}
+
+.OswaldFontNormal {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 400;
+}
+
+.OswaldFontBold {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+}
+
+// .DeepRed {
+//   color: '#cc3333';
+// }
+
+// .pacifico_font {
+//   font-family: 'Pacifico', cursive;
+// }
+// .montserrat_font {
+//   font-family: 'Montserrat', sans-serif;
+// }
+//
+// .lora_font {
+//   font-family: 'Lora', serif;
+// }
